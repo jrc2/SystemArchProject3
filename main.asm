@@ -49,6 +49,42 @@ loop_cat_sprite_data
         LDA #1
         STA $D015
 
+; Shows row 4 text
+        LDX #39
+
+loop_row_4_data
+        LDA ROW4_DATA,X
+        STA $0400,X+160
+        DEX
+        BPL loop_row_4_data
+
+
+; Shows row 11 text
+        LDX #39
+loop_row_11_data
+        LDA ROW11_DATA,X
+        STA $0400,X+440
+        DEX
+        BPL loop_row_11_data
+
+
+; Shows row 17 text
+        LDX #39
+loop_row_17_data
+        LDA ROW17_DATA
+        STA $0400,X+680
+        DEX
+        BPL loop_row_17_data
+
+
+; Shows row 22 text
+        LDX #39
+loop_row_22_data
+        LDA ROW22_DATA
+        STA $0400,X+880
+        DEX
+        BPL loop_row_22_data
+
 
 program_exit
         rts
