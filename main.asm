@@ -19,6 +19,36 @@ PROGRAM_START
         jsr PRINTLINE
 ; start your code here
         
+; Copies cat sprite data
+        LDX #63
+
+loop_cat_sprite_data
+        LDA CAT_SPRITE_DATA,X
+        STA CAT_SPRITE_PIXELS,X
+        DEX
+        BPL loop_cat_sprite_data
+        
+
+; Sets cat sprite pointer
+        LDA #CAT_SPRITE_PIXELS/64
+        STA $07F8
+
+
+; Sets cat sprite color
+        LDA #$01 ; white
+        STA $D027
+
+
+; Sets cat sprite location
+        LDA #50
+        STA $D000 ; x coordinate
+        STA $D001 ; y coordinate
+
+
+; Enables cat sprite
+        LDA #1
+        STA $D015
+
 
 program_exit
         rts
