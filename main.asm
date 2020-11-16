@@ -45,9 +45,37 @@ loop_cat_sprite_data
         STA $D001 ; y coordinate
 
 
-; Enables cat sprite
-        LDA #1
+; Copies mushroom sprite data
+        LDX #63
+
+loop_mushroom_sprite_data
+        LDA MUSHROOM_SPRITE_DATA,X
+        STA MUSHROOM_SPRITE_PIXELS,X
+        DEX
+        BPL loop_mushroom_sprite_data
+
+
+; Sets mushroom sprite pointer
+        LDA #MUSHROOM_SPRITE_PIXELS/64
+        STA $07F9
+
+
+; Sets mushroom sprite color
+        LDA #$01 ; white
+        STA $D028
+
+
+; Sets mushroom sprite location
+        LDA #60
+        STA $D002 ; x coordinate
+        LDA #150
+        STA $D003 ; y coordinate
+
+
+; Enables all sprites
+        LDA #%00000011
         STA $D015
+
 
 ; Shows row 4 text
         LDX #39
@@ -90,10 +118,17 @@ loop_row_22_data
 loop_cat
         LDA $D001 ; cat y coordinate
         ADC #10
-        STA $D001
+        STA $D001 ; moves cat down 10
 
 ; Checks for collisions with the background
         LDA $D01F ; background collision address
+        AND #%00000001
+        CMP #%00000001
+        BEQ make_cat_red
+        BNE make_cat_white
+
+; Checks for collssions with other spites
+        LDA $D01E ; sprite collision address
         AND #%00000001
         CMP #%00000001
         BNE make_cat_white
