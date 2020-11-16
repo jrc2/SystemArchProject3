@@ -86,6 +86,15 @@ loop_row_22_data
         BPL loop_row_22_data
 
 
+; Loopy thing to make the cat move
+loop_make_cat_moooooove
+        LDA $D001
+        ADC #10
+        STA $D001
+        JSR WAIT_1_SECOND
+        JMP loop_make_cat_moooooove
+
+
 program_exit
         rts
 
