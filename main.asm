@@ -55,25 +55,30 @@ loop_mushroom_sprite_data
         BPL loop_mushroom_sprite_data
 
 
-; Sets mushroom sprite pointer
+; Sets mushroom sprites pointers
         LDA #MUSHROOM_SPRITE_PIXELS/64
         STA $07F9
+        STA $07FA
 
 
-; Sets mushroom sprite color
+; Sets mushroom sprites color
         LDA #$01 ; white
-        STA $D028
+        STA $D028 ; first mushroom 
+        STA $D029 ; second mushroom 
 
 
-; Sets mushroom sprite location
+; Sets mushroom sprites locations
         LDA #60
-        STA $D002 ; x coordinate
+        STA $D002 ; x coordinate first mushroom
+        STA $D004 ; x coordinate second mushroom
         LDA #150
-        STA $D003 ; y coordinate
+        STA $D003 ; y coordinate first mushroom
+        LDA #210
+        STA $D005 ; y coordinate second mushroom
 
 
 ; Enables all sprites
-        LDA #%00000011
+        LDA #%00000111
         STA $D015
 
 
