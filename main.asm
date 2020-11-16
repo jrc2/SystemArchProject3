@@ -86,13 +86,34 @@ loop_row_22_data
         BPL loop_row_22_data
 
 
-; Loopy thing to make the cat move
-loop_make_cat_moooooove
-        LDA $D001
+; Loop to make the cat move and check for collisions
+loop_cat
+        LDA $D001 ; cat y coordinate
         ADC #10
         STA $D001
+
+; Checks for collisions with the background
+        LDA $D01F ; background collision address
+        AND #%00000001
+        CMP #%00000001
+        BNE make_cat_white
+
+; Changes color of cat because of collision
+make_cat_red
+        LDX #02 ; red
+        STX $D027 ; makes cat red
+        JMP wait_and_move_again
+
+; Resets cat color to white
+make_cat_white
+        LDX #01 ; white
+        STX $D027 ; makes cat white
+
+; Waits a second and go back to beginning of loop
+wait_and_move_again
         JSR WAIT_1_SECOND
-        JMP loop_make_cat_moooooove
+        JMP loop_cat
+
 
 
 program_exit
